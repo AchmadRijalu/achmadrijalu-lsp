@@ -27,7 +27,7 @@ class CustomerController extends Controller
     public function create()
     {
         //
-        
+
         return view('create-customer');
     }
 
@@ -37,15 +37,15 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         //
-        customer::create(
-            [
-                'name' => $request->name,
-                'address' => $request->address,
-                'phone_number' => $request->phone_number,
-                'id_card' => $request->id_card
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            'phone_number' => 'required|numeric', // Ensure it is numeric
+            'id_card' => 'required|numeric', // Ensure it is numeric
+        ]);
 
-            ]
-        );
+        customer::create($validatedData);
+
         return redirect(route('customer.index'));
     }
 
@@ -72,18 +72,17 @@ class CustomerController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
-
         $customer = customer::findorFail($id);
-        $customer->update(
-            [
-                'name' => $request->name,
-                'address' => $request->address,
-                'phone_number' => $request->phone_number,
-                'id_card' => $request->id_card,
 
-            ]
-        );
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            'phone_number' => 'required|numeric', // Ensure it is numeric
+            'id_card' => 'required|numeric', // Ensure it is numeric
+        ]);
+
+        $customer->update($validatedData);
+
         return redirect(route('customer.index'));
     }
 

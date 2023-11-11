@@ -49,14 +49,20 @@
             </div>
             <div class="relative z-0 w-full mb-6 group">
                 @if ($vehicle->vehicleable_type == 'App\Models\motorcycle')
-                <input type="text" name="petrol_capacity" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 pee" value="{{ $vehicle->vehicleable->petrol_capacity }}" />
-                <input type="text" name="luggage_size" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 pee" value="{{ $vehicle->vehicleable->luggage_size }}" />
+                <label for="petrol_capacity">Petrol Capacity</label>
+                <input type="text" name="petrol_capacity" id="petrol_capacity" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 pee" value="{{ $vehicle->vehicleable->petrol_capacity }}" />
+                <label for="luggage_size">Luggage Size</label>
+                <input type="text" name="luggage_size" id="luggage_size" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 pee" value="{{ $vehicle->vehicleable->luggage_size }}" />
                 @elseif ($vehicle->vehicleable_type == 'App\Models\car')
-                <input type="text" name="fuel_type" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 pee" value="{{ $vehicle->vehicleable->fuel_type }}" />
-                <input type="text" name="trunk_area" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 pee" value="{{ $vehicle->vehicleable->trunk_area }}" />
+                <label for="fuel_type">Fuel Type</label>
+                <input type="text" name="fuel_type" id="fuel_type" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 pee" value="{{ $vehicle->vehicleable->fuel_type }}" />
+                <label for="trunk_area">Trunk Area</label>
+                <input type="text" name="trunk_area" id="trunk_area" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 pee" value="{{ $vehicle->vehicleable->trunk_area }}" />
                 @elseif ($vehicle->vehicleable_type == 'App\Models\truck')
-                <input type="text" name="number_tires" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 pee" value="{{ $vehicle->vehicleable->number_tires }}" />
-                <input type="text" name="spacious_cargo_area" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 pee" value="{{ $vehicle->vehicleable->spacious_cargo_area }}" />
+                <label for="number_tires">Number of Tires</label>
+                <input type="text" name="number_tires" id="number_tires" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 pee" value="{{ $vehicle->vehicleable->number_tires }}" />
+                <label for="spacious_cargo_area">Spacious Cargo Area</label>
+                <input type="text" name="spacious_cargo_area" id="spacious_cargo_area" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 pee" value="{{ $vehicle->vehicleable->spacious_cargo_area }}" />
                 @endif
 
             </div>

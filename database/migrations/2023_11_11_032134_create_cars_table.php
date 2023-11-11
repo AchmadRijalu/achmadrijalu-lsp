@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             // $table->unsignedBigInteger('vehicle_id');
             $table->string("fuel_type");
-            $table->string("trunk_area");
+            $table->integer("trunk_area");
             $table->timestamps();
             // $table->foreign("vehicle_id")->references("id")->on("vehicles")->onDelete('cascade')->onUpdate('cascade');
         });

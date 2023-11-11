@@ -39,118 +39,103 @@ class VehicleController extends Controller
      */
     public function store(Request $request)
     {
+        $commonRules = [
+            'model' => 'required|string|max:255',
+            'year' => 'required|integer|min:1900|max:' . (date('Y') + 1),
+            'passenger_count' => 'required|integer|min:1',
+            'manufacture' => 'required|string|max:255',
+            'price' => 'required|integer|min:1',
+            'vehicle_type' => 'required|in:motor,car,truck',
+            'photo' => 'nullable|mimes:pdf,jpeg|max:10000',
+        ];
 
-        if ($request->photo === null) {
-            // $filename = time().'.'.$request->foto->getClientOriginalExtension();
-            $this->validate($request, [
 
-                'photo' => "mimes:pdf,jpeg|max:10000"
-            ]);
-            // $request->foto->move('assets', $filename);
-            // Check the vehicle type and create the specific type data
-            $vehicleType = $request->vehicle_type;
-            // dd($vehicleType);
-            if ($vehicleType === 'motor') {
-                $motor = motorcycle::create([
-                    'petrol_capacity' => $request->petrol_capacity,
-                    'luggage_size' => $request->luggage_size,
-                ]);
+        $this->validate($request, $commonRules);
 
-                $vehicle = Vehicle::create([
-                    'model' => $request->model,
-                    'year' => $request->year,
-                    'passenger_count' => $request->passenger_count,
-                    'manufacture' => $request->manufacture,
-                    'price' => $request->price,
-                ]);
-                $motor->vehicle()->save($vehicle);
-            } elseif ($vehicleType === 'car') {
-                $car = car::create([
-                    'fuel_type' => $request->fuel_type,
-                    'trunk_area' => $request->trunk_area,
-                ]);
 
-                $vehicle = Vehicle::create([
-                    'model' => $request->model,
-                    'year' => $request->year,
-                    'passenger_count' => $request->passenger_count,
-                    'manufacture' => $request->manufacture,
-                    'price' => $request->price,
-                ]);
-                $car->vehicle()->save($vehicle);
-            } elseif ($vehicleType === 'truck') {
-                $truck = truck::create([
-                    'number_tires' => $request->number_tires,
-                    'spacious_cargo_area' => $request->spacious_cargo_area,
-                ]);
-                $vehicle = Vehicle::create([
-                    'model' => $request->model,
-                    'year' => $request->year,
-                    'passenger_count' => $request->passenger_count,
-                    'manufacture' => $request->manufacture,
-                    'price' => $request->price,
-                    'photo' => $request->photo
-                ]);
-                $truck->vehicle()->save($vehicle);
-            }
-        } else if ($request->photo != null) {
+        if ($request->hasFile('photo')) {
             $filename = time() . '.' . $request->photo->getClientOriginalExtension();
-            $this->validate($request, [
-
-                'photo' => "mimes:pdf,jpeg|max:10000"
-            ]);
             $request->photo->move('assets', $filename);
-            // Check the vehicle type and create the specific type data
-            $vehicleType = $request->vehicle_type;
-            // dd($vehicleType);
-            if ($vehicleType === 'motor') {
-                $motor = motorcycle::create([
-                    'petrol_capacity' => $request->petrol_capacity,
-                    'luggage_size' => $request->luggage_size,
-                ]);
-
-                $vehicle = Vehicle::create([
-                    'model' => $request->model,
-                    'year' => $request->year,
-                    'passenger_count' => $request->passenger_count,
-                    'manufacture' => $request->manufacture,
-                    'price' => $request->price,
-                    'photo' => $filename
-                ]);
-                $motor->vehicle()->save($vehicle);
-            } elseif ($vehicleType === 'car') {
-                $car = car::create([
-                    'fuel_type' => $request->fuel_type,
-                    'trunk_area' => $request->trunk_area,
-                ]);
-
-                $vehicle = Vehicle::create([
-                    'model' => $request->model,
-                    'year' => $request->year,
-                    'passenger_count' => $request->passenger_count,
-                    'manufacture' => $request->manufacture,
-                    'price' => $request->price,
-                    'photo' => $filename
-                ]);
-                $car->vehicle()->save($vehicle);
-            } elseif ($vehicleType === 'truck') {
-                $truck = truck::create([
-                    'number_tires' => $request->number_tires,
-                    'spacious_cargo_area' => $request->spacious_cargo_area,
-                ]);
-                $vehicle = Vehicle::create([
-                    'model' => $request->model,
-                    'year' => $request->year,
-                    'passenger_count' => $request->passenger_count,
-                    'manufacture' => $request->manufacture,
-                    'price' => $request->price,
-                    'photo' => $filename
-                ]);
-                $truck->vehicle()->save($vehicle);
-            }
+        } else {
+            $filename = null;
         }
 
+        // Check the vehicle type and create the specific type data
+        $vehicleType = $request->vehicle_type;
 
+        if ($vehicleType === 'motor') {
+
+            $motorcycleRules = [
+                'petrol_capacity' => 'required|numeric|min:1',
+                'luggage_size' => 'required|numeric|min:1',
+            ];
+
+            $this->validate($request, $motorcycleRules);
+
+            $motor = Motorcycle::create([
+                'petrol_capacity' => $request->petrol_capacity,
+                'luggage_size' => $request->luggage_size,
+            ]);
+
+            $vehicle = Vehicle::create([
+                'model' => $request->model,
+                'year' => $request->year,
+                'passenger_count' => $request->passenger_count,
+                'manufacture' => $request->manufacture,
+                'price' => $request->price,
+                'photo' => $filename,
+            ]);
+
+            $motor->vehicle()->save($vehicle);
+        } elseif ($vehicleType === 'car') {
+
+            $carRules = [
+                'fuel_type' => 'required|string|max:255',
+                'trunk_area' => 'required|numeric|min:1',
+            ];
+
+            $this->validate($request, $carRules);
+
+            $car = Car::create([
+                'fuel_type' => $request->fuel_type,
+                'trunk_area' => $request->trunk_area,
+            ]);
+
+            $vehicle = Vehicle::create([
+                'model' => $request->model,
+                'year' => $request->year,
+                'passenger_count' => $request->passenger_count,
+                'manufacture' => $request->manufacture,
+                'price' => $request->price,
+                'photo' => $filename,
+            ]);
+
+            $car->vehicle()->save($vehicle);
+        } elseif ($vehicleType === 'truck') {
+
+            $truckRules = [
+                'number_tires' => 'required|integer|min:1',
+                'spacious_cargo_area' => 'required|numeric|min:1',
+            ];
+
+            $this->validate($request, $truckRules);
+
+            $truck = Truck::create([
+                'number_tires' => $request->number_tires,
+                'spacious_cargo_area' => $request->spacious_cargo_area,
+            ]);
+
+            $vehicle = Vehicle::create([
+                'model' => $request->model,
+                'year' => $request->year,
+                'passenger_count' => $request->passenger_count,
+                'manufacture' => $request->manufacture,
+                'price' => $request->price,
+                'photo' => $filename,
+            ]);
+
+            $truck->vehicle()->save($vehicle);
+        }
 
         return redirect(route('vehicle.index'));
     }
@@ -178,9 +163,17 @@ class VehicleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $this->validate($request, [
+        $commonRules = [
+            'model' => 'required|string|max:255',
+            'year' => 'required|integer|min:1900|max:' . (date('Y') + 1),
+            'passenger_count' => 'required|integer|min:1',
+            'manufacture' => 'required|string|max:255',
+            'price' => 'required|integer|min:1',
             'photo' => 'nullable|mimes:pdf,jpeg|max:10000',
-        ]);
+
+        ];
+        $this->validate($request, $commonRules);
+
 
         $vehicle = Vehicle::findOrFail($id);
         $vehicleType = $vehicle->vehicleable_type;
@@ -196,18 +189,37 @@ class VehicleController extends Controller
 
         // Update specific vehicle type fields
         if ($vehicleType === 'App\Models\motorcycle') {
+            $motorcycleRules = [
+                'petrol_capacity' => 'required|numeric|min:1',
+                'luggage_size' => 'required|numeric|min:1',
+            ];
+
+            $this->validate($request, $motorcycleRules);
+
             $motorcycle = Motorcycle::findOrFail($vehicle->vehicleable->id);
             $motorcycle->update([
                 'petrol_capacity' => $request->petrol_capacity,
                 'luggage_size' => $request->luggage_size,
             ]);
         } elseif ($vehicleType === 'App\Models\car') {
+            $carRules = [
+                'fuel_type' => 'required|string|max:255',
+                'trunk_area' => 'required|numeric|min:1',
+            ];
+
+            $this->validate($request, $carRules);
             $car = Car::findOrFail($vehicle->vehicleable->id);
             $car->update([
                 'fuel_type' => $request->fuel_type,
                 'trunk_area' => $request->trunk_area,
             ]);
         } elseif ($vehicleType === 'App\Models\truck') {
+            $truckRules = [
+                'number_tires' => 'required|integer|min:1',
+                'spacious_cargo_area' => 'required|numeric|min:1',
+            ];
+
+            $this->validate($request, $truckRules);
             $truck = Truck::findOrFail($vehicle->vehicleable->id);
             $truck->update([
                 'number_tires' => $request->number_tires,
