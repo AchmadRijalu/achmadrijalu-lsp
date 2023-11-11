@@ -12,19 +12,22 @@ class order extends Model
     protected $table = 'orders';
     protected $fillable = [
         'customer_id',
+        'vehicle_id',
+        'total_count',
     ];
     protected $primaryKey = "id";
 
     
 
-    public function customers()
+    public function customer()
     {
         return $this->belongsTo(customer::class);
     }
-
-
-    public function vehicles()
+    public function vehicle()
     {
-        return $this->belongsToMany(vehicle::class, 'order_vehicles')->withPivot(['order_count']);
+        return $this->belongsTo(vehicle::class);
     }
+
+
+    
 }

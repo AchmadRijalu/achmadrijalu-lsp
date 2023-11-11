@@ -4,17 +4,18 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Route;
+use App\Models\order;
 
 
 
 Route::get('/', function () {
-    return view('orders');
+    $orders = Order::all();
+    return view('orders', ['title' => 'Orders'], compact('orders'));
 });
 
 Route::get('/create-order', function () {
     return view('create-order');
 });
-
 
 Route::get('/create-data', function () {
     return view('create-data');

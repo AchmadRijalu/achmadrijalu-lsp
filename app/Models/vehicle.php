@@ -23,10 +23,7 @@ class vehicle extends Model
     ];
     protected $primaryKey = "id";
 
-    public function orders()
-    {
-        return $this->belongsToMany(order::class, 'order_vehicles')->withPivot(['order_count']);
-    }
+    
 
     public function vehicleable()
     {

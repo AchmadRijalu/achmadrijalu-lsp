@@ -20,74 +20,64 @@
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" class="px-6 py-3">
-                            Product name
+                            Customer name
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Color
+                            Vehicle
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Category
+                            Total Count
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Price
+                            Total Price
                         </th>
                         <th scope="col" class="px-6 py-3">
                             <span class="sr-only">Edit</span>
                         </th>
+                        <th scope="col" class="px-6 py-3">
+
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($orders as $order)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            Apple MacBook Pro 17"
-                        </th>
-                        <td class="px-6 py-4">
-                            Silver
+                        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            @if ($order->customer)
+                            {{ $order->customer->name }}
+                            @else
+                            Customer Not Found
+                            @endif
                         </td>
                         <td class="px-6 py-4">
-                            Laptop
+                            {{ $order->vehicle->model }}
                         </td>
                         <td class="px-6 py-4">
-                            $2999
+                            {{$order->total_count}}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ $order->vehicle->price * $order->total_count }}
                         </td>
                         <td class="px-6 py-4 text-right">
-                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+
+                            <button type="submit" class="font-medium text-blue-600 dark:text-blue-500 hover:underline " onclick="location.href='{{route('order.edit', $order->id)}}'">Edit</button>
                         </td>
-                    </tr>
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            Microsoft Surface Pro
-                        </th>
-                        <td class="px-6 py-4">
-                            White
-                        </td>
-                        <td class="px-6 py-4">
-                            Laptop PC
-                        </td>
-                        <td class="px-6 py-4">
-                            $1999
-                        </td>
+
                         <td class="px-6 py-4 text-right">
-                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                            <form action="{{route('order.destroy', $order->id) }}" method="POST">
+
+                                {{ csrf_field() }}
+                                @method('DELETE')
+                                <button type="submit" class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</button>
+
+                            </form>
+
                         </td>
                     </tr>
-                    <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            Magic Mouse 2
-                        </th>
-                        <td class="px-6 py-4">
-                            Black
-                        </td>
-                        <td class="px-6 py-4">
-                            Accessories
-                        </td>
-                        <td class="px-6 py-4">
-                            $99
-                        </td>
-                        <td class="px-6 py-4 text-right">
-                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                        </td>
-                    </tr>
+                    @endforeach
+
+
+
                 </tbody>
             </table>
         </div>

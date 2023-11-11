@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateorderRequest;
 use App\Models\order;
 use App\Models\customer;
 use App\Models\vehicle;
+use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
@@ -16,8 +17,8 @@ class OrderController extends Controller
     public function index()
     {
         //
-        $order = Order::all();
-        return view('orders', ['title' => 'Orders'], compact('order'));
+        $orders = Order::all();
+        return view('orders', ['title' => 'Orders'], compact('orders'));
     }
 
     /**
@@ -34,9 +35,19 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreorderRequest $request)
+    public function store(Request $request)
     {
         //
+        order::create(
+            [
+                'customer_id' => $request->customer_id,
+                'vehicle_id' => $request->vehicle_id,
+                'total_count' => $request->order_count,
+
+
+            ]
+        );
+        return redirect(route('order.index'));
     }
 
     /**
@@ -50,24 +61,51 @@ class OrderController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(order $order)
+    public function edit(request $request, string $id)
     {
         //
+        $order = order::findorFail($id);
+        $customers = customer::all();
+        $vehicles = vehicle::all();
+        return view('edit-order', ['title' => 'Edit Data order'], compact('order', 'customers', 'vehicles'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateorderRequest $request, order $order)
+    public function update(Request $request, string $id)
     {
-        //
-    }
+        // Validate the request data
+        $request->validate([
+            'order_count' => 'required|integer|min:1',
+            // Add any other validation rules you need
+        ]);
 
+        // Find the order
+        $order = Order::findOrFail($id);
+
+        // Update the order with validated data
+        $order->update([
+            'customer_id' => $request->customer_id,
+            'vehicle_id' => $request->vehicle_id,
+            'total_count' => $request->order_count,
+            // Add any other fields you need to update
+        ]);
+
+        // Redirect back to the index page
+        return redirect(route('order.index'));
+    }
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(order $order)
+    public function destroy($order)
     {
         //
+        //
+        $order = order::findorFail($order);
+
+        $order->delete();
+
+        return redirect(route('order.index'));
     }
 }
