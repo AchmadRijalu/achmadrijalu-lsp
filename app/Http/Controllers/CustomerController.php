@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class CustomerController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a list of all customers and vehicles.
      */
     public function index()
     {
@@ -22,7 +22,7 @@ class CustomerController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form page for creating a new customer.
      */
     public function create()
     {
@@ -32,7 +32,7 @@ class CustomerController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+    * Store a newly created customer in database.
      */
     public function store(Request $request)
     {
@@ -50,7 +50,7 @@ class CustomerController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * not used
      */
     public function show(customer $customer)
     {
@@ -58,7 +58,7 @@ class CustomerController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form page for editing the specified customer.
      */
     public function edit($request)
     {
@@ -68,7 +68,7 @@ class CustomerController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified customer.
      */
     public function update(Request $request, string $id)
     {
@@ -87,7 +87,7 @@ class CustomerController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified customer from database.
      */
     public function destroy($customer)
     {

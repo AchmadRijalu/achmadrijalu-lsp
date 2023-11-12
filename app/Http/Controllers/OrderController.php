@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 class OrderController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a list of all order.
      */
     public function index()
     {
@@ -22,7 +22,7 @@ class OrderController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form page for creating a new order.
      */
     public function create()
     {
@@ -33,7 +33,7 @@ class OrderController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created order in database.
      */
     public function store(Request $request)
     {
@@ -51,7 +51,7 @@ class OrderController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * not used
      */
     public function show(order $order)
     {
@@ -59,7 +59,7 @@ class OrderController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form page  editing the specified order.
      */
     public function edit(request $request, string $id)
     {
@@ -71,7 +71,7 @@ class OrderController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified order data in database.
      */
     public function update(Request $request, string $id)
     {
@@ -96,7 +96,7 @@ class OrderController extends Controller
         return redirect(route('order.index'));
     }
     /**
-     * Remove the specified resource from storage.
+     * delete or remove the specified order data from database.
      */
     public function destroy($order)
     {

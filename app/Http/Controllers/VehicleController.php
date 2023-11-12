@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Storage;
 class VehicleController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a list of all vehicle and customer.
      */
     public function index()
     {
@@ -26,7 +26,7 @@ class VehicleController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form page for creating a new vehicle data.
      */
     public function create()
     {
@@ -35,7 +35,7 @@ class VehicleController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly vehicle data resource in database.
      */
     public function store(Request $request)
     {
@@ -141,7 +141,7 @@ class VehicleController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * not used
      */
     public function show(vehicle $vehicle)
     {
@@ -149,7 +149,7 @@ class VehicleController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form page for editing the specified vehicle.
      */
     public function edit($request)
     {
@@ -159,7 +159,7 @@ class VehicleController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified vehicle data in database.
      */
     public function update(Request $request, string $id)
     {
@@ -255,7 +255,7 @@ class VehicleController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified vehicle from database.
      */
     public function destroy($id)
     {
